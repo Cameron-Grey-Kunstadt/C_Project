@@ -25,6 +25,8 @@ The compiler: The compiler used here is gcc. Dan actually uses cl, which I think
 
 #### Pointers
 
+#### Arrays
+
 #### Unsigned vs Signed Variables
 
 #### Structures, members
