@@ -29,3 +29,5 @@ The compiler: The compiler used here is gcc. Dan actually uses cl, which I think
 
 #### Structures, members
 
+#### Casting
+
