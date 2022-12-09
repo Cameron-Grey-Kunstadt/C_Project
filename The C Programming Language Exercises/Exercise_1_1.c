@@ -2,7 +2,5 @@
 
 void main(void){
     
-    printf("Hello, \cworld\n");
+    printf("Hello, world\n");
 }
-
-// The \c causes an "unknown escape sequence" error
