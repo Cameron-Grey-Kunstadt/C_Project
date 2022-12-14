@@ -62,5 +62,11 @@ The large switch statement specifies how our program should process different me
 
 Then our default setting just specifies what our default response to any normal message should be, we need a "catch-all" response for anything windows might ask of our program. Here we set our LRESULT Result equal to DefWindowProc, which is a default procedure that will work for most handling most cases. We pass in the same variables as our window_callback. Then we just make sure our function returns our Result, and we're good to go. Protocol done!
 
+So far, we have WinMain, our entry point into the program, defined a window_class struct, which we've filled in with some important information about our program that windows needs, and we've made window_callback, our windows protocol function, that specifies the protocols for dealing with messages between windows and our program. Next thing we need is to Register our program. This will happen within the WinMain function.
 
+The windows registry is a database on our windows machines that holds the information about software applications, how they need to be ran, information, settings, etc. We just need to pass some basic information to this registry, so that windows knows how to run our application.
+
+Again, skipping past some of the details, here is our entire function of WinMain now.
+
+![image](https://user-images.githubusercontent.com/38634070/207528526-85a51b17-c035-477c-a565-b8e7cf695d26.png)
 
