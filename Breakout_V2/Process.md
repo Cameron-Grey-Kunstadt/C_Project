@@ -1,6 +1,6 @@
 ## Intro
 
-This document will outline the essential steps involved in creating a simple breakout game in C.
+This document will outline the essential steps involved in creating a simple breakout game in C. Some of the information here is already a bit outdated as Microsoft has made some new functions that supersede some of the ones here, but they still function perfectly well for our purposes here in making a simple game to learn C.
 
 ## Making a window (On a Windows system)
 
