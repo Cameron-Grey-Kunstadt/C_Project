@@ -1,6 +1,6 @@
 ## Intro
 
-This document will outline the essential steps involved in creating a simple breakout game in C. Some of the information here is already a bit outdated as Microsoft has made some new functions that supersede some of the ones here, but they still function perfectly well for our purposes here in making a simple game to learn C.
+This document will outline the essential steps involved in creating a simple breakout game in C. Some of the information here is already a bit outdated as Microsoft has made some new functions that supersede some of the ones here, but they still function perfectly well for our purposes here in making a simple game to learn C. I've also included excesive comments in this version of the code for explanation purposes, but see Breakout_V1 for the more consise version.
 
 ## Making a window (On a Windows system)
 
@@ -9,6 +9,8 @@ In order to create a graphical application on a Windows system, you must refer t
 at the top of your program.
 
 ***
+
+#### WinMain (Our entry point)
 The very first thing to do is to establish an entry point for Windows using WinMain.
 
 Documentation here: https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-winmain
@@ -28,6 +30,7 @@ I wont show these differences in every case, but I just wanted to highlight the 
 
 But we have our entry point! 
 ***
+#### WNDCLASS (Our window class)
 
 Now we can get started making a window, the next thing we need is WNDCLASSA struct. This struct essentials just holds a bunch of variables that Windows needs filled in. For most purposes, many of these variables can just be set to zero, so I'd start with the line:
 
@@ -42,6 +45,8 @@ After setting all the variables in that struct to 0, we can change the few we ac
 
 ![image](https://user-images.githubusercontent.com/38634070/207518182-9d75e421-98c7-4f70-84da-763ba718f6f2.png)
 
+***
+#### Windows Protocol
 So, we have WinMain, and within it we declared a WNDCLASS struct called window_class, and specified the variables that are important to our program. The next thing we need to fill in is our Windows Protocol function that we named window_callback. This procedure is just going to specify some instructions on how our application should respond to different messages coming from our systems. 
 
 Doc here: https://learn.microsoft.com/en-us/windows/win32/learnwin32/writing-the-window-procedure
@@ -64,6 +69,8 @@ Then our default setting just specifies what our default response to any normal 
 
 So far, we have WinMain, our entry point into the program, defined a window_class struct, which we've filled in with some important information about our program that windows needs, and we've made window_callback, our windows protocol function, that specifies the protocols for dealing with messages between windows and our program. Next thing we need is to Register our program. This will happen within the WinMain function.
 
+***
+#### Register
 The windows registry is a database on our windows machines that holds the information about software applications, how they need to be ran, information, settings, etc. We just need to pass some basic information to this registry, so that windows knows how to run our application.
 
 Again, skipping past some of the details, here is our entire function of WinMain now.
