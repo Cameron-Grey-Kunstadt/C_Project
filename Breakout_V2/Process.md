@@ -70,10 +70,25 @@ Then our default setting just specifies what our default response to any normal 
 So far, we have WinMain, our entry point into the program, defined a window_class struct, which we've filled in with some important information about our program that windows needs, and we've made window_callback, our windows protocol function, that specifies the protocols for dealing with messages between windows and our program. Next thing we need is to Register our program. This will happen within the WinMain function.
 
 ***
-#### Register
+#### Register and Create our Window
 The windows registry is a database on our windows machines that holds the information about software applications, how they need to be ran, information, settings, etc. We just need to pass some basic information to this registry, so that windows knows how to run our application.
 
 Again, skipping past some of the details, here is our entire function of WinMain now.
 
 ![image](https://user-images.githubusercontent.com/38634070/207528526-85a51b17-c035-477c-a565-b8e7cf695d26.png)
 
+We start by ensuring our class is properly registered with the statement:
+if(RegisterClassA(&window_class))
+
+Docs for RegisterClassA:https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerclassa
+
+Then we can finally create our window using CreateWindowExA, and we need to save the handle of this window, so we'll call it window_handle. You can follow the documentation to see what each parameter is, the ones I have here name our application "Breakout", give us a visible window, use some default settings, and create the size as 1280 by 720.
+
+Docs for CreateWindowExa: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-createwindowexa
+
+Then finally we just need a loop to get our program started. We declare that if our window handle is valid, we will loop continuously, all the while grabbing any incoming messages and handling them, but if the message result ever equals 0, the program stops, and were done.
+
+Now we have our window! Yay!
+![image](https://user-images.githubusercontent.com/38634070/207694191-b56ea5e2-3209-4240-8fef-8a52c2cafe9a.png)
+
+***
