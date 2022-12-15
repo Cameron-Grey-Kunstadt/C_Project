@@ -13,11 +13,6 @@ window_callback (HWND    window,
     
     switch(message){
         case WM_SIZE:{ // What should our program do when we change the size of the window
-            RECT ClientRect;
-            int width = ClientRect.right - ClientRect.left;
-            int height = ClientRect.bottom - ClientRect.top;
-            GetClientRect(window, &ClientRect);
-            Win32ResizeDIBSection(width, height);
         } break;
         
         case WM_DESTROY:{ // What should our program do when it is destroyed (that's something we would do)
