@@ -1,4 +1,7 @@
 #include <windows.h>
+#include <stdbool.h>
+
+static bool running = true;
 
 LRESULT 
 window_callback (HWND    window,
@@ -16,6 +19,7 @@ window_callback (HWND    window,
         } break;
         
         case WM_CLOSE:{ // What should our program do when the closing window button is pushed.
+            running = false;
         } break;
         default:{ // What should our program do when it's running normally.
             Result = DefWindowProc(window, message, w_param, l_param);
@@ -54,7 +58,7 @@ int WinMain(HINSTANCE hInstance,
         // As long as our window handle is valid..
         if(window_handle){
             
-            for(;;){
+            while(running){
                 MSG message;
                 BOOL MessageResult = GetMessage(&message, 0, 0, 0);
                 if(MessageResult > 0)
