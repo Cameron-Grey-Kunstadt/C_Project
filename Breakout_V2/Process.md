@@ -121,11 +121,13 @@ Lets start by defining four global variables:
 
 And two separate functions that we will fill in:
 
-    static void Win32ResizeDIBSection (int width, int height){} // This will resize our bitmap whenever the window size changes.
+    // This will resize our bitmap whenever the window size changes.
+    static void Win32ResizeDIBSection (int width, int height){}
     
-    static void Win32UpdateWindow(HWND window, int x, int y, int width, int height){} // This updates and redraws our window whenever we need it to.
+    // This updates and redraws our window whenever we need it to.
+    static void Win32UpdateWindow(HWND window, int x, int y, int width, int height){}
     
-    This part has a lot of nuance and is overall rather tedious, so lets just look at the code.
+This part has a lot of nuance and is overall rather tedious, so lets just look at the code.
    
 ![image](https://user-images.githubusercontent.com/38634070/207993299-3d828e3e-4b31-495c-b972-4c2e0a45287f.png)
 
