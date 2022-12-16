@@ -34,7 +34,7 @@ But we have our entry point!
 
 Now we can get started making a window, the next thing we need is WNDCLASSA struct. This struct essentials just holds a bunch of variables that Windows needs filled in. For most purposes, many of these variables can just be set to zero, so I'd start with the line:
 
-WNDCLASSA window_class = { };
+    WNDCLASSA window_class = { };
 
 ##### By default in C, setting a struct = { }, or struct = {0}, sets every variable in the struct equal to 0. This is referred to as "clearing to zero".
 
@@ -59,7 +59,7 @@ We can see our LRESULT window_callback, as well as a few parameters to pass into
 
 Then that line 
 
-#### LRESULT Result = 0;
+    LRESULT Result = 0;
 
 basically states that our programs default response to a message is equal to 0, which for windows essentially means "That message was handled, we took care of it".
 
@@ -91,4 +91,41 @@ Then finally we just need a loop to get our program started. We declare that if 
 Now we have our window! Yay!
 ![image](https://user-images.githubusercontent.com/38634070/207694191-b56ea5e2-3209-4240-8fef-8a52c2cafe9a.png)
 
+You'll notice that we can't close this window, this is simply because we haven't filled in a response to our WM_CLOSE message, so the program doesn't know what it should do when we hit the close button. To be able to close it, we can create a global bool variable that will keep track of whether or not our program is running, and then when we hit the close button, we can just set running = false;. Also at the top we should include stdbool.h.
+
+So we can just add this at the top of the code somewhere:
+
+    static bool running = true;
+
+Then we can add into the WM_ClOSE case:
+
+    running = false;
+
+Lastly we can change our continuous message loop that we have in WinMain from the for(;;), which loops no matter what, to while(running), so that when we close the window, the loop will stop, and the program will end.
+
+![image](https://user-images.githubusercontent.com/38634070/207989531-591afac3-51ea-4385-a4d6-824098fc264b.png)
+
+Now we can close the window, change the size, all that good stuff. You can find the code up to this point is called Making_a_window.c
+
 ***
+## Bitmap
+
+Now that we have our window, the next thing we need to be able to do is paint it. What we need now is a bitmap of our window. The bitmap will allow us to have full control over all the pixels on the screen. This unfortunately will take some effort, as we need to do more communicating with Windows to allow us to store our bitmap in memory, and be able to pass it to windows so it can redraw our application.
+
+Lets start by defining four global variables:
+
+    static BITMAPINFO BitmapInfo; // This defines the dimensions and colors of our bitmap, among other things.
+    static void *BitmapMemory; // A pointer to memory of where our bitmap is
+    static HBITMAP BitmapHandle; // Handle to our bitmap
+    static HDC BitmapDeviceContext; // The area and status of our bitmap
+
+And two separate functions that we will fill in:
+
+    static void Win32ResizeDIBSection (int width, int height){} // This will resize our bitmap whenever the window size changes.
+    
+    static void Win32UpdateWindow(HWND window, int x, int y, int width, int height){} // This updates and redraws our window whenever we need it to.
+    
+    This part has a lot of nuance and is overall rather tedious, so lets just look at the code.
+   
+![image](https://user-images.githubusercontent.com/38634070/207993299-3d828e3e-4b31-495c-b972-4c2e0a45287f.png)
+
