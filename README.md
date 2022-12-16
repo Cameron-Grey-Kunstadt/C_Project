@@ -18,18 +18,92 @@ Setting up 4 coder requires a 4coder project file, a bat file, a run file, and a
 
 The compiler: The compiler used here is gcc. Dan actually uses cl, which I think comes from VisualStudio, but it seems like gcc is equally or more popular for c compiling. I downloaded the minGW x64 file for my machine and added the path.
 
-# Windows 
-
-
 # C Programming
+
+#### Variables (signed and unsigned)
+
+C has the very standard variables most programming languages have mainly:
+- int
+- float
+- char
+- bool
+
+The main thing to note about variables in C is the difference between signed and unsigned variables. Differentiating if the variables run into negative values, or remain as soley positive numbers. For example an 8 bit int is a signed variable, and runs from -128 to 127, but if specified as an unsigned int, it will run from 0 to 255. floats work in the same way.
+
+The specific size of the variables usually depends on your machine, so you don't always need to specify, but you always can do so if you need. The "double" variable can also be useful, as it is a float that can hold twice as many significant figures.
 
 #### Pointers
 
+Pointers are extremely important in C, partially because they are the main way that C creates arrays, as C doesn't have a designated array type. 
+
+Pointers in C are the same in other languages in the fact that they are simply pointing to a specific location in memory, usually the address of a variable of interest. There are numerous reasons that these are useful outside of the afforementioned arrays. You can declare a pointer to a variable's address like this:
+
+                int x = 10;
+                int *pointer_to_x; // The * at the declaration signifies this variable is a pointer
+                
+                pointer_to_x = &x; // The & signifies the address of the variable. 
+                
+I've personally found the pointer declaration kind of confusing, since when you declare the pointer you must prefix it with "*", signifying it's a pointer, but then when actually using the pointer you drop the "*". 
+
+And actually, after declaring and initalizing everything above, and pointer_to_x represents &x, it is now known that 
+
+                *pointer_to_x = x.
+
+I like to think of the "*" as actually meaning "the real variable stored where this pointer is pointing to", but thats what we have to initialize it with.
+
+but then afterwards
+
+                pointer_to_x, means the pointer to the address
+and
+
+                *pointer_to_x, means the value of the variable that is located in that address.
+                
+I'm sure most people understood this much faster than me, I just found it confusing.
+
 #### Arrays
 
-#### Unsigned vs Signed Variables
+So as I mentioned, arrays in C are often not a designated variable type, they are in fact just a pointer to one place in memory, which can be considered the start of the array. Then you can store the information you need sequentially, in spaces after that starting point.
 
-#### Structures, members
+![image](https://user-images.githubusercontent.com/38634070/208029947-c446d120-386f-4647-a61b-207f7cd83c52.png)
+
+This lets you do some real funky things so its important to be careful. For example you can just increment your initial pointer, like in this example just
+
+                p*++; 
+                
+And boom, your array now starts one place up, and you've left that first variable behind. But you can also actually decrement, completely into the unknown memory behind your array.
+
+                p*--;
+
+I think this will make it pretty easy to shoot yourself in the foot, but they have a ton of interesting functionality.
+
+#### Structures
+
+From tutorialspoint.com, I will state their definition of a struct.
+
+###### structure is another user defined data type available in C that allows to combine data items of different kinds.
+
+I cant help but think these are similar to classes and objects in Java, although I'm sure there are enough differences that that is not a good comparison. C isn't an OOP language after all. Heres a visual example of declaring a struct.
+
+![image](https://user-images.githubusercontent.com/38634070/208032328-b382d1af-9dbe-44b3-b258-222733130db2.png)
+
+The structure is basically a framework for a group of variables and data of all types. They have massive amounts of variability and functionality and I'm sure most programmers will find themselves very comfortable in creating and handling them.
 
 #### Casting
 
+In higher-level languages, they will always complain if you are trying to use a variable type that isn't correct in the context you've used them in. C however allows you the power to say "I know this variable isn't the type that this function or procedure wants, but I know what I'm doing, so do it anyway". 
+
+The following example, again from tutorialspoint, illustrates an example here.
+
+                #include <stdio.h>
+                main() {
+
+                        int sum = 17, count = 5;
+                        double mean;
+
+                        mean = (double) sum / count;
+                        printf("Value of mean : %f\n", mean );
+                }
+
+#### Static
+
+Based on the tutorials I've seen, people really hate how the C language uses the word static. It can mean up to three very different things that are entirely dependent on context.
