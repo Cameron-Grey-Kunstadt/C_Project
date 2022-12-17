@@ -64,7 +64,7 @@ I'm sure most people understood this much faster than me, I just found it confus
 
 So as I mentioned, arrays in C are often not a designated variable type, they are in fact just a pointer to one place in memory, which can be considered the start of the array. Then you can store the information you need sequentially, in spaces after that starting point.
 
-![image](https://user-images.githubusercontent.com/38634070/208029947-c446d120-386f-4647-a61b-207f7cd83c52.png)
+<img src="https://user-images.githubusercontent.com/38634070/208217985-0ad84842-77c7-44f1-9523-1bc2cbe9833a.png" width="640" height="300">
 
 This lets you do some real funky things so its important to be careful. For example you can just increment your initial pointer, like in this example just
 
@@ -84,7 +84,7 @@ From tutorialspoint.com, I will state their definition of a struct.
 
 I cant help but think these are similar to classes and objects in Java, although I'm sure there are enough differences that that is not a good comparison. C isn't an OOP language after all. Heres a visual example of declaring a struct.
 
-![image](https://user-images.githubusercontent.com/38634070/208032328-b382d1af-9dbe-44b3-b258-222733130db2.png)
+<img src="https://user-images.githubusercontent.com/38634070/208032328-b382d1af-9dbe-44b3-b258-222733130db2.png" width="400" height="400">
 
 The structure is basically a framework for a group of variables and data of all types. They have massive amounts of variability and functionality and I'm sure most programmers will find themselves very comfortable in creating and handling them.
 
