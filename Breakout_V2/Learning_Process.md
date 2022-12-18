@@ -163,4 +163,6 @@ You'll notice we never actually made real use of our variables xOffset and yOffs
         ++xOffset;
 You'll notice that our gradient boxes now move to the left! Some real animation! 
 
+The code up to this point will be our file Bitmap_and_Drawing.c
+
 ## User input and making our breakout paddle
