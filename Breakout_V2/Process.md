@@ -110,16 +110,17 @@ Now we can close the window, change the size, all that good stuff. You can find 
 ***
 ## Bitmap
 
-Now that we have our window, the next thing we need to be able to do is paint it. What we need now is a bitmap of our window. The bitmap will allow us to have full control over all the pixels on the screen. This unfortunately will take some effort, as we need to do more communicating with Windows to allow us to store our bitmap in memory, and be able to pass it to windows so it can redraw our application.
+Now that we have our window, the next thing we need to be able to do is paint it. What we need now is a bitmap of our window. The bitmap will allow us to have full control over all the pixels on the screen. This will take a bit of effort, as we need to do more communicating with Windows to allow us to store our bitmap in memory, and be able to pass it to Windows so it can draw our application.
 
-Lets start by defining four global variables:
+Lets start by defining some global variables:
 
     static BITMAPINFO BitmapInfo; // This defines the dimensions and colors of our bitmap, among other things.
     static void *BitmapMemory; // A pointer to memory of where our bitmap is
-    static HBITMAP BitmapHandle; // Handle to our bitmap
-    static HDC BitmapDeviceContext; // The area and status of our bitmap
+    static int BitmapWidth; // Width of Bitmap 
+    static int BitmapHeight; // Height of Bitmap
+    static int BytesPerPixel = 4; // How many bytes of storage we have per pixel, 4 is fine now for RGB.
 
-And two separate functions that we will fill in:
+And declaring two separate functions that we will fill in:
 
     // This will resize our bitmap whenever the window size changes.
     static void Win32ResizeDIBSection (int width, int height){}
@@ -127,7 +128,39 @@ And two separate functions that we will fill in:
     // This updates and redraws our window whenever we need it to.
     static void Win32UpdateWindow(HWND window, int x, int y, int width, int height){}
     
-This part has a lot of nuance and is overall rather tedious, so lets just look at the code.
+This part has a lot of nuance and is overall a bit tedious, so lets just look at the code.
    
-![image](https://user-images.githubusercontent.com/38634070/207993299-3d828e3e-4b31-495c-b972-4c2e0a45287f.png)
+![image](https://user-images.githubusercontent.com/38634070/208323788-23ee0b0f-92b2-41e2-93bc-5d3c375ce2b4.png)
 
+In our Win32ResizeDIBSection, we check if our bitmap already has designated memory, if it does we release it. We reset all of our settings for our new bitmap, and then we allocate the correct size of memory for the new bitmap.
+
+In Win32UpdateWindow, we get the width and height of our new window from the \*ClientRect, and then we use the StretchDIBits function from windows to automatically resize our window, passing it all of our Bitmap, Window, and memory data.
+
+StretchDIBits Doc: https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-stretchdibits
+
+Now the Bitmap is good to go!
+
+## Rendering and Animating
+
+Now that we've got all the pieces we need, we can start drawing to the screen. Lets make a function and just call it ExampleDrawing. We can use the example Casey used in the Handmade Hero series, and draw a simple gradient to the screen.
+
+![image](https://user-images.githubusercontent.com/38634070/208324882-9f22fef7-2980-4c37-8612-109ac4091935.png)
+
+This code will go row by row through our bitmap and assign a color value to each pixel. For each row, the pixels get more blue from left to right, for 255 pixels (from our uint8 var), and for each column, they get more green as they go down (also for 255 pixels). So on the screen we will see several subsections of our blue-green gradient.
+
+To actually start running though, we need to call this function within our running loop in WinMain. And ensure that as the bitmap is updating ever iteration of the loop, the window is redrawing as well.
+
+Here is that code.
+
+![image](https://user-images.githubusercontent.com/38634070/208325300-ff197a4b-5675-46d7-b0f5-24fd3cf55e52.png)
+
+
+Now we get our weird gradient image!!
+
+![image](https://user-images.githubusercontent.com/38634070/208325327-d4e7a844-c641-4220-9ef9-2c8328239f4c.png)
+
+You'll notice we never actually made real use of our variables xOffset and yOffset, they just stay at 0 the whole time so they might as well not be there. But if you uncomment that line
+        ++xOffset;
+You'll notice that our gradient boxes now move to the left! Some real animation! 
+
+## User input and making our breakout paddle
